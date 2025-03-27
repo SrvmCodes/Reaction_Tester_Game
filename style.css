@@ -1,0 +1,17 @@
+
+body{
+    font-family: sans-serif;
+}
+#shape {
+    width: 150px;
+    height: 150px;
+    background-color: red;
+
+    position: relative;
+    top: 100px;
+    left: 200px;
+
+    .bold{
+        font-weight: bold;
+    }
+}

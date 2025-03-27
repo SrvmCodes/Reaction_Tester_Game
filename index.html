@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction Tester</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: url('https://www.transparenttextures.com/patterns/cubes.png') repeat, linear-gradient(to right, #1e3c72, #2a5298);
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            color: #ffcc00;
+        }
+        .bold {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        #shape {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            display: none;
+            position: absolute;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .start-btn {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #ffcc00;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .start-btn:hover {
+            background-color: #e6b800;
+        }
+        .instructions {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Your Reactions!</h1>
+        <p>Click on the boxes and circles as fast as you can!</p>
+        <p class="bold">Your Time: <span id="timeTaken">0s</span></p>
+        <button class="start-btn" onclick="startGame()">Start Game</button>
+        <p class="instructions">Instructions: Click on the appearing shape as fast as possible to test your reaction speed.</p>
+    </div>
+    <div id="shape"></div>
+
+    <script>
+        let start;
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+        function makeShapeAppear() {
+            let top = Math.random() * (window.innerHeight - 200);
+            let left = Math.random() * (window.innerWidth - 200);
+            let width = (Math.random() * 150) + 50;
+            let shape = document.getElementById("shape");
+            shape.style.borderRadius = Math.random() > 0.5 ? "50%" : "0";
+            shape.style.backgroundColor = getRandomColor();
+            shape.style.width = width + "px";
+            shape.style.height = width + "px";
+            shape.style.top = top + "px";
+            shape.style.left = left + "px";
+            shape.style.display = "block";
+            start = new Date().getTime();
+        }
+        function appearAfterDelay() {
+            setTimeout(makeShapeAppear, Math.random() * 2000);
+        }
+        function startGame() {
+            document.querySelector(".start-btn").style.display = "none";
+            appearAfterDelay();
+        }
+        document.getElementById("shape").onclick = function() {
+            this.style.display = "none";
+            let end = new Date().getTime();
+            let timeTaken = (end - start) / 1000;
+            document.getElementById("timeTaken").innerHTML = timeTaken + "s";
+            appearAfterDelay();
+        }
+    </script>
+</body>
+</html>
